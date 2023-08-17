@@ -4,7 +4,7 @@
 #include <string.h>
 
 char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
-  bool neg = false;
+	bool neg = false;
 	size_t n1l, n2l, n1d, n1nz = 0, n2d, n1r, n1size, n2r, n2nz = 0, r1l, r2l, resl = 0, ressize, x, y, z;
 	unsigned long int n1i, n2i, n2i2, n2i3, n2i4, n2i5, n2i6, n2i7, n2i8, n2i9, carry = 0, n1xi;
 	unsigned long int* carries;
@@ -143,7 +143,7 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 			r1[n1l - n1r - 2] = '\0';
 	};
 	if(n1[0]=='\0') {
-    n1[0] = '0';
+		n1[0] = '0';
 		n1[1] = '\0';
 	};
 
@@ -173,7 +173,7 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 			r2[n2l - n2r - 2] = '\0';
 	};
 	if(n2[0]=='\0') {
-    n2[0] = '0';
+		n2[0] = '0';
 		n2[1] = '\0';
 	};
 
@@ -183,7 +183,7 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 
 	if(n1[0]=='0' && n1[1]=='\0' && r1[0]=='0' && r1[1]=='\0')
 		return "0";
-	
+
 	n1l = strlen(n1);
 	r1l = strlen(r1);
 	n2l = strlen(n2);
@@ -204,7 +204,7 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 
 		n1d = n1l;
 		for(x = 0; x < n1l; x++) {
-      if(n1[x]==decch) {
+			if(n1[x]==decch) {
 				n1d = x;
 				do
 					n1[x] = n1[x + 1];
@@ -214,7 +214,7 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 		};
 		n1i = atoi(n1);
 		n1 = realloc(n1, (n1l + r1l + 1) * sizeof(char));
-    strcat(n1, r1);
+		strcat(n1, r1);
 		n1i = atoi(n1) - n1i;
 
 		free(n1);
@@ -229,14 +229,14 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 		free(r2);
 
 		if(n1d==n1l) {
-    	m1 = (char*) malloc((r1l + 1) * sizeof(char));
+			m1 = (char*) malloc((r1l + 1) * sizeof(char));
 			for(x = 0; x < r1l; x++)
 				m1[x] = '9';
 			m1[r1l] = '\0';
 		}
 		else {
 			n1r = n1l - n1d - 1 + r1l;
-      m1 = (char*) malloc((n1r + 1) * sizeof(char));
+			m1 = (char*) malloc((n1r + 1) * sizeof(char));
 			for(x = 0; x < r1l; x++)
 				m1[x] = '9';
 			for(; x < n1r; x++)
@@ -245,14 +245,14 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 		};
 
 		if(n2d==n2l) {
-    	m2 = (char*) malloc((r2l + 1) * sizeof(char));
+			m2 = (char*) malloc((r2l + 1) * sizeof(char));
 			for(x = 0; x < r2l; x++)
 				m2[x] = '9';
 			m2[r2l] = '\0';
 		}
 		else {
 			n2r = n2l - n2d - 1 + r2l;
-      m2 = (char*) malloc((n2r + 1) * sizeof(char));
+			m2 = (char*) malloc((n2r + 1) * sizeof(char));
 			for(x = 0; x < r2l; x++)
 				m2[x] = '9';
 			for(; x < n2r; x++)
@@ -282,7 +282,7 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 
 		res = advdiv(n1, n2, minch, decch, rch1, rch2);
 
-    free(n1);
+		free(n1);
 		free(n2);
 
 		return res;
@@ -291,9 +291,9 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 	free(r2);
 
 	n1r = 0;
-  if(n2d!=n2l) {
-    for(x = 0; x <= n1l; x++) {
-      if(n1[x]==decch || x==n1l) {
+	if(n2d!=n2l) {
+		for(x = 0; x <= n1l; x++) {
+			if(n1[x]==decch || x==n1l) {
 				n1size = n1l + 1;
 				n1d = x + n2l - n2d - 1;
 				for(; x < n1d; x++) {
@@ -311,7 +311,7 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 				break;
 			};
 		};
-    if(x >= n1l) {
+		if(x >= n1l) {
 			n1[x] = '\0';
 			n1l = n1d;
 		}
@@ -321,7 +321,7 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 
 	n2i = atoi(n2);
 
-  free(n2);
+	free(n2);
 
 	n2i2 = n2i * 2;
 	n2i3 = n2i * 3;
@@ -345,7 +345,7 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 			break;
 		n1xi = n1[x] - 48 + carry * 10;
 		if(n1xi < n2i) {
-      carry = n1xi;
+			carry = n1xi;
 			if(resl==neg)
 				continue;
 			res[resl] = '0';
@@ -405,19 +405,19 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 		resl++;
 	};
 
-  if(x==n1l && carry==0) {
+	if(x==n1l && carry==0) {
 		free(n1);
 		free(r1);
-    res[resl] = '\0';
+		res[resl] = '\0';
 		return res;
 	};
 
-  if(resl==neg) {
-    res[neg] = '0';
+	if(resl==neg) {
+		res[neg] = '0';
 		resl++;
 	};
 
-  n1d = x;
+	n1d = x;
 
 	ressize+= 16;
 
@@ -431,7 +431,7 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 			carries = (unsigned long int*) malloc(r1l * n2i * sizeof(unsigned long int));
 			for(y = 0; ; y++) {
 				carries[y] = carry;
-      	n1xi = r1[n1r] - 48 + carry * 10;
+				n1xi = r1[n1r] - 48 + carry * 10;
 				n1r = (n1r + 1) % r1l;
 				if(n1xi < n2i) {
 					carry = n1xi;
@@ -477,21 +477,21 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 				if(carry==0 && r1l==1 && r1[0]=='0') {
 					free(r1);
 					n1nz = 0;
-          res[resl] = '\0';
+					res[resl] = '\0';
 					return res;
 				};
 				for(z = 0; z < y; z++) {
-        	if(carries[z]==carry && (z % r1l)==((y + 1) % r1l)) {
+					if(carries[z]==carry && (z % r1l)==((y + 1) % r1l)) {
 						free(r1);
 						free(carries);
 						res[resl] = '\0';
 						result = (char*) malloc((resl + 3) * sizeof(char));
 						n1r = resl - y + z - 1;
 						if(res[n1r - 1]==res[resl - 1]) {
-              strncpy(result, res, --n1r);
+							strncpy(result, res, --n1r);
 							result[n1r] = rch1;
 							result[n1r + 1] = res[resl - 1];
-              result[n1r + 2] = '\0';
+							result[n1r + 2] = '\0';
 							res[--resl] = '\0';
 						}
 						else {
