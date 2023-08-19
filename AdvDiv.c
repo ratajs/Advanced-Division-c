@@ -569,12 +569,16 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 int main(int argc, char* argv[]) {
 	char* r;
 
-	if(argc < 3)
+	if(argc < 3) {
+		printf("Usage: %s n1 n2\n", argv[0]);
 		return 0;
+	};
 	r = advdiv(argv[1], argv[2], '-', '.', '[', ']');
-	if(r[0]=='\0')
+	if(r[0]=='\0') {
+		puts("Error");
 		return 0;
-	printf("%s\n", r);
+	};
+	puts(r);
 	free(r);
 	return 1;
 };
