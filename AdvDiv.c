@@ -18,7 +18,7 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 	char* tmp;
 
 	if(n1[0]=='\0' || n2[0]=='\0' || minch=='\0' || decch=='\0' || rch1=='\0' || minch=='0' || decch=='0' || rch1=='0' || rch2=='0' || minch=='1' || decch=='1' || rch1=='1' || rch2=='1' || minch=='2' || decch=='2' || rch1=='2' || rch2=='2' || minch=='3' || decch=='3' || rch1=='3' || rch2=='3' || minch=='4' || decch=='4' || rch1=='4' || rch2=='4' || minch=='5' || decch=='5' || rch1=='5' || rch2=='5' || minch=='6' || decch=='6' || rch1=='6' || rch2=='6' || minch=='7' || decch=='7' || rch1=='7' || rch2=='7' || minch=='8' || decch=='8' || rch1=='8' || rch2=='8' || minch=='9' || decch=='9' || rch1=='9' || rch2=='9')
-		return "";
+		goto Error;
 
 	if(n1[0]==minch) {
 		n1 = (char*) n1 + 1;
@@ -38,25 +38,25 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 	for(x = 0; x <= n1l; x++) {
 		if(n1[x]==decch) {
 			if(n1d!=n1l)
-				return "";
+				goto Error;
 			n1nz = n1d = x;
 			continue;
 		};
 		if(n1[x]==rch1) {
 			if(n1r!=n1l || n1d==n1l)
-				return "";
+				goto Error;
 			n1r = x;
 			continue;
 		};
 		if(n1[x]==rch2) {
 			if(n1r==n1l || n1l > x + 1)
-				return "";
+				goto Error;
 			continue;
 		};
 		switch(n1[x]) {
 			case '\0':
 				if(n1r!=n1l && n1[x - 1]!=rch2)
-					return "";
+					goto Error;
 				break;
 			case '1':
 			case '2':
@@ -71,7 +71,7 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 			case '0':
 				break;
 			default:
-				return "";
+				goto Error;
 		};
 	};
 
@@ -80,25 +80,25 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 	for(x = 0; x <= n2l; x++) {
 		if(n2[x]==decch) {
 			if(n2d!=n2l)
-				return "";
+				goto Error;
 			n2nz = n2d = x;
 			continue;
 		};
 		if(n2[x]==rch1) {
 			if(n2r!=n2l || n2d==n2l)
-				return "";
+				goto Error;
 			n2r = x;
 			continue;
 		};
 		if(n2[x]==rch2) {
 			if(n2r==n2l || n2l > x + 1)
-				return "";
+				goto Error;
 			continue;
 		};
 		switch(n2[x]) {
 			case '\0':
 				if(n2r!=n2l && n2[x - 1]!=rch2)
-					return "";
+					goto Error;
 				break;
 			case '1':
 			case '2':
@@ -113,7 +113,7 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 			case '0':
 				break;
 			default:
-				return "";
+				goto Error;
 		};
 	};
 
@@ -178,11 +178,23 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 	};
 
 
-	if(n2[0]=='0' && n2[1]=='\0' && r2[0]=='0' && r2[1]=='\0')
-		return "";
+	if(n2[0]=='0' && n2[1]=='\0' && r2[0]=='0' && r2[1]=='\0') {
+		free(n1);
+		free(r1);
+		free(n2);
+		free(r2);
+		goto Error;
+	};
 
-	if(n1[0]=='0' && n1[1]=='\0' && r1[0]=='0' && r1[1]=='\0')
-		return "0";
+	if(n1[0]=='0' && n1[1]=='\0' && r1[0]=='0' && r1[1]=='\0') {
+		free(n1);
+		free(r1);
+		free(n2);
+		free(r2);
+		res = (char*) malloc(2 * sizeof(char));
+		strcpy(res, "0");
+		return res;
+	};
 
 	n1l = strlen(n1);
 	r1l = strlen(r1);
@@ -564,6 +576,10 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 			res = realloc(res, ressize * sizeof(char));
 		};
 	};
+	Error:
+		res = (char*) malloc(sizeof(char));
+		res[0] = '\0';
+		return res;
 };
 
 int main(int argc, char* argv[]) {
@@ -571,14 +587,15 @@ int main(int argc, char* argv[]) {
 
 	if(argc < 3) {
 		printf("Usage: %s n1 n2\n", argv[0]);
-		return 0;
+		return 1;
 	};
 	r = advdiv(argv[1], argv[2], '-', '.', '[', ']');
 	if(r[0]=='\0') {
 		puts("Error");
-		return 0;
+		free(r);
+		return 1;
 	};
 	puts(r);
 	free(r);
-	return 1;
+	return 0;
 };
