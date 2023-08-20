@@ -224,18 +224,18 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 				break;
 			};
 		};
-		n1i = atoi(n1);
+		n1i = strtoul(n1, &res, 10);
 		n1 = realloc(n1, (n1l + r1l + 1) * sizeof(char));
 		strcat(n1, r1);
-		n1i = atoi(n1) - n1i;
+		n1i = strtoul(n1, &res, 10) - n1i;
 
 		free(n1);
 		free(r1);
 
-		n2i = atoi(n2);
+		n2i = strtoul(n2, &res, 10);
 		n2 = realloc(n2, (n2l + r2l + 1) * sizeof(char));
 		strcat(n2, r2);
-		n2i = atoi(n2) - n2i;
+		n2i = strtoul(n2, &res, 10) - n2i;
 
 		free(n2);
 		free(r2);
@@ -272,8 +272,8 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 			m2[n2r] = '\0';
 		};
 
-		n1i*= atoi(m2);
-		n2i*= atoi(m1);
+		n1i*= strtoul(m2, &res, 10);
+		n2i*= strtoul(m1, &res, 10);
 
 		free(m1);
 		free(m2);
@@ -331,7 +331,7 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 			n1[x] = decch;
 	};
 
-	n2i = atoi(n2);
+	n2i = strtoul(n2, &res, 10);
 
 	free(n2);
 
