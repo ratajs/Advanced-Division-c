@@ -440,7 +440,7 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 	for(x++; ; x++) {
 		if(x >= n1l) {
 			free(n1);
-			carries = (unsigned long int*) malloc(r1l * n2i * sizeof(unsigned long int));
+			carries = (unsigned long int*) malloc(ressize * sizeof(unsigned long int));
 			for(y = 0; ; y++) {
 				carries[y] = carry;
 				n1xi = r1[n1r] - 48 + carry * 10;
@@ -524,6 +524,7 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 					ressize+= 16;
 
 					res = realloc(res, ressize * sizeof(char));
+					carries = realloc(carries, ressize * sizeof(unsigned long int));
 				};
 				x++;
 			};
