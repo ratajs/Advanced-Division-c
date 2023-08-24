@@ -38,7 +38,7 @@ char *advdiv(char *n1, char *n2, char minch, char decch, char rch1, char rch2) {
 			n1r = x;
 			continue;
 		};
-		if(n1[x]==rch2) {
+		if(n1[x]==rch2 && x!=n1l) {
 			if(n1r==n1l || n1l > x + 1)
 				goto Error;
 			continue;
@@ -80,7 +80,7 @@ char *advdiv(char *n1, char *n2, char minch, char decch, char rch1, char rch2) {
 			n2r = x;
 			continue;
 		};
-		if(n2[x]==rch2) {
+		if(n2[x]==rch2 && x!=n2l) {
 			if(n2r==n2l || n2l > x + 1)
 				goto Error;
 			continue;
@@ -434,7 +434,7 @@ char *advdiv(char *n1, char *n2, char minch, char decch, char rch1, char rch2) {
 		if(x >= n1l) {
 			free(n1);
 			carries = (unsigned long int*) malloc(ressize * sizeof(unsigned long int));
-			for(y = 0; ; y++) {
+			for(y = 0; ; x++, y++) {
 				carries[y] = carry;
 				n1xi = r1[n1r] - 48 + carry * 10;
 				n1r = (n1r + 1) % r1l;
@@ -519,7 +519,6 @@ char *advdiv(char *n1, char *n2, char minch, char decch, char rch1, char rch2) {
 					res = realloc(res, ressize * sizeof(char));
 					carries = realloc(carries, ressize * sizeof(unsigned long int));
 				};
-				x++;
 			};
 		};
 		n1xi = n1[x] - 48 + carry * 10;
@@ -570,6 +569,7 @@ char *advdiv(char *n1, char *n2, char minch, char decch, char rch1, char rch2) {
 			res = realloc(res, ressize * sizeof(char));
 		};
 	};
+
 	Error:
 		res = (char*) malloc(sizeof(char));
 		res[0] = '\0';
@@ -579,11 +579,26 @@ char *advdiv(char *n1, char *n2, char minch, char decch, char rch1, char rch2) {
 int main(int argc, char *argv[]) {
 	char *r;
 
-	if(argc < 3) {
-		printf("Usage: %s n1 n2\n", argv[0]);
-		return 1;
+	switch(argc) {
+		case 7:
+			r = advdiv(argv[1], argv[2], *argv[3], *argv[4], *argv[5], *argv[6]);
+			break;
+		case 6:
+			r = advdiv(argv[1], argv[2], *argv[3], *argv[4], *argv[5], '\0');
+			break;
+		case 5:
+			r = advdiv(argv[1], argv[2], *argv[3], *argv[4], '[', ']');
+			break;
+		case 4:
+			r = advdiv(argv[1], argv[2], *argv[3], '.', '[', ']');
+			break;
+		case 3:
+			r = advdiv(argv[1], argv[2], '-', '.', '[', ']');
+			break;
+		default:
+			printf("Usage: %s n1 n2 [minch [decch [rch1 [rch2]]]]\n", argv[0]);
+			return 1;
 	};
-	r = advdiv(argv[1], argv[2], '-', '.', '[', ']');
 	if(r[0]=='\0') {
 		puts("Error");
 		free(r);
