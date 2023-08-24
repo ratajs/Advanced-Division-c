@@ -3,18 +3,12 @@
 #include <stdbool.h>
 #include <string.h>
 
-char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
+char *advdiv(char *n1, char *n2, char minch, char decch, char rch1, char rch2) {
 	bool neg = false;
 	size_t n1l, n2l, n1d, n1nz = 0, n2d, n1r, n1size, n2r, n2nz = 0, r1l, r2l, resl = 0, ressize, x, y, z;
 	unsigned long int n1i, n2i, n2i2, n2i3, n2i4, n2i5, n2i6, n2i7, n2i8, n2i9, carry = 0, n1xi;
-	unsigned long int* carries;
-	char* r1;
-	char* r2;
-	char* m1;
-	char* m2;
-	char* res;
-	char* result;
-	char* tmp;
+	unsigned long int *carries;
+	char *r1, *r2, *m1, *m2, *res, *result, *tmp;
 
 	if(n1[0]=='\0' || n2[0]=='\0' || minch=='\0' || decch=='\0' || rch1=='\0' || minch=='0' || decch=='0' || rch1=='0' || rch2=='0' || minch=='1' || decch=='1' || rch1=='1' || rch2=='1' || minch=='2' || decch=='2' || rch1=='2' || rch2=='2' || minch=='3' || decch=='3' || rch1=='3' || rch2=='3' || minch=='4' || decch=='4' || rch1=='4' || rch2=='4' || minch=='5' || decch=='5' || rch1=='5' || rch2=='5' || minch=='6' || decch=='6' || rch1=='6' || rch2=='6' || minch=='7' || decch=='7' || rch1=='7' || rch2=='7' || minch=='8' || decch=='8' || rch1=='8' || rch2=='8' || minch=='9' || decch=='9' || rch1=='9' || rch2=='9')
 		goto Error;
@@ -582,8 +576,8 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 		return res;
 };
 
-int main(int argc, char* argv[]) {
-	char* r;
+int main(int argc, char *argv[]) {
+	char *r;
 
 	if(argc < 3) {
 		printf("Usage: %s n1 n2\n", argv[0]);
