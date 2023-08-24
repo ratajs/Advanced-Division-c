@@ -8,7 +8,6 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 	size_t n1l, n2l, n1d, n1nz = 0, n2d, n1r, n1size, n2r, n2nz = 0, r1l, r2l, resl = 0, ressize, x, y, z;
 	unsigned long int n1i, n2i, n2i2, n2i3, n2i4, n2i5, n2i6, n2i7, n2i8, n2i9, carry = 0, n1xi;
 	unsigned long int* carries;
-	char sign[2] = "";
 	char* r1;
 	char* r2;
 	char* m1;
@@ -29,9 +28,6 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 		n2 = (char*) n2 + 1;
 		neg = !neg;
 	};
-
-	if(neg)
-		strncat(sign, &minch, 1);
 
 	n1r = n1d = n1l = strlen(n1);
 
@@ -285,9 +281,12 @@ char* advdiv(char* n1, char* n2, char minch, char decch, char rch1, char rch2) {
 		tmp = (char*) malloc((n1l + n2r) * sizeof(char));
 		n2 = (char*) malloc((n2l + n1r) * sizeof(char));
 
-		strcpy(n1, sign);
-		sprintf(tmp, "%lu", n1i);
-		strcat(n1, tmp);
+		if(neg) {
+			n1[0] = minch;
+			sprintf(n1 + 1, "%lu", n1i);
+		}
+		else
+			sprintf(n1, "%lu", n1i);
 		sprintf(n2, "%lu", n2i);
 
 		free(tmp);
