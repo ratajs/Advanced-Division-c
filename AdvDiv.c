@@ -4,7 +4,7 @@
 #include <string.h>
 
 char *advdiv(char *n1, char *n2, char minch, char decch, char rch1, char rch2) {
-	bool neg = false;
+	bool neg = false, r1e, r2e;
 	size_t n1l, n2l, n1d, n1nz = 0, n2d, n1r, n1size, n2r, n2nz = 0, r1l, r2l, resl = 0, ressize, x, y, z;
 	unsigned long int n1i, n2i, n2i2, n2i3, n2i4, n2i5, n2i6, n2i7, n2i8, n2i9, carry = 0, n1xi;
 	unsigned long int *carries;
@@ -190,7 +190,10 @@ char *advdiv(char *n1, char *n2, char minch, char decch, char rch1, char rch2) {
 	};
 
 
-	if(n2[0]=='0' && n2[1]=='\0' && r2[0]=='0' && r2[1]=='\0') {
+	r1e = r1[0]=='0' && r1[1]=='\0';
+	r2e = r2[0]=='0' && r2[1]=='\0';
+
+	if(n2[0]=='0' && n2[1]=='\0' && r2e) {
 		free(n1);
 		free(r1);
 		free(n2);
@@ -198,7 +201,7 @@ char *advdiv(char *n1, char *n2, char minch, char decch, char rch1, char rch2) {
 		goto Error;
 	};
 
-	if(n1[0]=='0' && n1[1]=='\0' && r1[0]=='0' && r1[1]=='\0') {
+	if(n1[0]=='0' && n1[1]=='\0' && r1e) {
 		free(n1);
 		free(r1);
 		free(n2);
@@ -375,64 +378,54 @@ char *advdiv(char *n1, char *n2, char minch, char decch, char rch1, char rch2) {
 			carry = n1xi;
 			if(resl==neg)
 				continue;
-			res[resl] = '0';
-			resl++;
+			res[resl++] = '0';
 			continue;
 		};
 		if(n1xi < n2i2) {
 			carry = n1xi - n2i;
-			res[resl] = '1';
-			resl++;
+			res[resl++] = '1';
 			continue;
 		};
 		if(n1xi < n2i3) {
 			carry = n1xi - n2i2;
-			res[resl] = '2';
-			resl++;
+			res[resl++] = '2';
 			continue;
 		};
 		if(n1xi < n2i4) {
 			carry = n1xi - n2i3;
-			res[resl] = '3';
-			resl++;
+			res[resl++] = '3';
 			continue;
 		};
 		if(n1xi < n2i5) {
 			carry = n1xi - n2i4;
-			res[resl] = '4';
-			resl++;
+			res[resl++] = '4';
 			continue;
 		};
 		if(n1xi < n2i6) {
 			carry = n1xi - n2i5;
-			res[resl] = '5';
-			resl++;
+			res[resl++] = '5';
 			continue;
 		};
 		if(n1xi < n2i7) {
 			carry = n1xi - n2i6;
-			res[resl] = '6';
-			resl++;
+			res[resl++] = '6';
 			continue;
 		};
 		if(n1xi < n2i8) {
 			carry = n1xi - n2i7;
-			res[resl] = '7';
-			resl++;
+			res[resl++] = '7';
 			continue;
 		};
 		if(n1xi < n2i9) {
 			carry = n1xi - n2i8;
-			res[resl] = '8';
-			resl++;
+			res[resl++] = '8';
 			continue;
 		};
 		carry = n1xi - n2i9;
-		res[resl] = '9';
-		resl++;
+		res[resl++] = '9';
 	};
 
-	if(x==n1l && carry==0) {
+	if(x==n1l && carry==0 && r1e) {
 		free(n1);
 		free(r1);
 		res[resl] = '\0';
@@ -501,7 +494,7 @@ char *advdiv(char *n1, char *n2, char minch, char decch, char rch1, char rch2) {
 					res[resl] = '9';
 				};
 				resl++;
-				if(carry==0 && r1l==1 && r1[0]=='0') {
+				if(carry==0 && r1e) {
 					free(r1);
 					n1nz = 0;
 					res[resl] = '\0';
